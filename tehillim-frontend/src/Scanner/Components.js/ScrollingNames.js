@@ -6,7 +6,7 @@ export default function ScrollingNames({ currentStudents }) {
     console.log("naemsllisr");
     let LiList = [];
     for (let i = 0; i < currentStudents.length; i++) {
-      LiList.push(<div key={i}>{currentStudents[i]}</div>);
+      LiList.push(<span key={i}>{currentStudents[i]}</span>);
     }
     return LiList;
   };
@@ -14,7 +14,9 @@ export default function ScrollingNames({ currentStudents }) {
     <>
       <div id="scroll-container">
         <div className="wrap-container" id="wrap-scroll">
-          <ul id="ul-scroll">{namesLiList()}</ul>
+          {/* <ul id="ul-scroll"> */}
+          {namesLiList()}
+          {/* </ul> */}
         </div>
       </div>
       <svg>
