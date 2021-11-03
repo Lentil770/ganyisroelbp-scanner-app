@@ -1,13 +1,11 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Scanner from "./Components.js/Scanner";
 import ScrollingNames from "./Components.js/ScrollingNames";
 import Confetti from "react-confetti";
-import {
-  //fetchCurrentStudents,
-  handleCurrentStudentsResponse,
-} from "./Functions/CurrentStudents";
+import { handleCurrentStudentsResponse } from "./Functions/CurrentStudents";
 import { BASEURL } from "../misc.js";
+import TitleBar from "./Components.js/TitleBar";
 
 export default function ScannerMain() {
   const [currentStudents, setCurrentStudents] = useState([]);
@@ -53,6 +51,7 @@ export default function ScannerMain() {
           </span>
         </>
       )}
+      <TitleBar />
       <Scanner submitScan={submitScan} />
       <ScrollingNames currentStudents={currentStudents} />
     </div>

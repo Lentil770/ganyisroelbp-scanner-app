@@ -1,6 +1,7 @@
 import "../style/scrolling.css";
 
 export default function ScrollingNames({ currentStudents }) {
+  console.log(currentStudents);
   const namesLiList = () => {
     let LiList = [];
     for (let i = 0; i < currentStudents.length; i++) {
@@ -24,9 +25,10 @@ export default function ScrollingNames({ currentStudents }) {
   return (
     <>
       <div
-        className="wrap-container"
+        className="wrap-container scroll-fast"
         id="wrap-scroll"
         style={{
+          animationDuration: `${currentStudents.length * 1.2}s`,
           height:
             currentStudents.length * 300 /* = height of all spans*/ + "px",
         }}

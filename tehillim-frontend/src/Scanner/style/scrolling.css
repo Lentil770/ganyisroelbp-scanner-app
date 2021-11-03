@@ -19,11 +19,12 @@ body {
   top: 0;
   font: 300 30px/1 "Open Sans", sans-serif;
   width: 100%;
-  animation: scroll 45s linear 1s infinite;
+  animation: scroll linear 1s infinite;
   font-weight: 600;
   text-transform: uppercase;
   height: 300%;
 }
+/* animation-duration set programaticaly in scannermain.js */
 
 span {
   margin-bottom: 50px;
