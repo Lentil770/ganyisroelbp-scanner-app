@@ -5,7 +5,7 @@ const { PORT } = require("./config");
 const Scan = require("../db/scans");
 //connect to mongoDB
 const { MongoClient } = require("mongodb");
-const Student = require("../db/students");
+const { Student, StudentCopy } = require("../db/students");
 const { currentMonthObj } = require("../functions/misc");
 const uri =
   "mongodb+srv://app-user:V8ldG99SDfZU4qNp@ganyisroelbp.his3t.mongodb.net/scanner-site?retryWrites=true&w=majority";
@@ -31,13 +31,17 @@ app.get("/scan/:name", (req, res) => {
         upsert: true,
       })
         .then((result) => {
-          console.log(
-            result.matchedCount,
-            result.modifiedCount,
-            result.acknowledged
-          );
-          //check if new or old, return 200 if new (this month) 201 if not
-          res.status(200).json({ message: "db successfully updated" });
+          //making backup of students collection
+          StudentCopy.updateOne(
+            { studentID: req.params.name },
+            currentMonthObj,
+            {
+              upsert: true,
+            }
+          ).then((result) => {
+            //check if new or old, return 200 if new (this month) 201 if not
+            res.status(200).json({ message: "db successfully updated" });
+          });
         })
         .catch((err) => console.log(err));
     })
@@ -48,7 +52,7 @@ app.get("/scan", (req, res) => {
   //needs to fetch current students and send.
   Student.find(currentMonthObj)
     .then((result) => {
-      res.json(result);
+      res.status(200).json(result);
     })
     .catch((err) => console.log(err));
 });

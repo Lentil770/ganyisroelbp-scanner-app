@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState } from "react";
 
 export default function Scanner({ submitScan }) {
@@ -6,26 +5,36 @@ export default function Scanner({ submitScan }) {
 
   const handleScanSubmit = (e) => {
     e.preventDefault();
-    console.log(scanInput);
     submitScan(scanInput);
+    setScanInput("");
   };
   const handleKeyDown = (e) => {
-    if (e.keyCode === 13) {
+    //checks if enter or tab pressed to submit
+    if (e.keyCode === 13 || e.keyCode === 9) {
       submitScan(scanInput);
+      setScanInput("");
     }
+  };
+  const barcodeAutoFocus = () => {
+    document.getElementById("scanBarcode").focus();
   };
 
   return (
-    <div>
+    <div style={{ textAlign: "center", paddingTop: "20%" }}>
       <form onSubmit={handleScanSubmit}>
         <input
+          style={{
+            width: "400px",
+            fontSize: 60,
+          }}
           autoFocus={true}
-          placeholder="Scan Your Barcode Here!"
-          name="scan-barcode"
-          id="scan-barcode"
+          placeholder=" Scan Here!"
+          name="scanBarcode"
+          id="scanBarcode"
           value={scanInput}
           onChange={(e) => setScanInput(e.target.value)}
           onKeyDown={handleKeyDown}
+          onBlur={barcodeAutoFocus}
         />
       </form>
     </div>

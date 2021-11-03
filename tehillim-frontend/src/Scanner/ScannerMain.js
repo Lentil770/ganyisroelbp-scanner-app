@@ -12,27 +12,28 @@ import { BASEURL } from "../misc.js";
 export default function ScannerMain() {
   const [currentStudents, setCurrentStudents] = useState([]);
   const [showCelebration, setCelebration] = useState(false);
+  const [newStudentName, setNewStudentName] = useState("");
 
   const submitScan = (scanValue) => {
-    console.log("scanValue", scanValue);
+    console.log("scanValue", typeof scanValue);
+
     axios.get(BASEURL + "/scan/" + scanValue).then((response) => {
       console.log(response);
+      setNewStudentName(scanValue);
       if (response.status === 200) {
         if (!currentStudents.find((x) => x === scanValue)) {
-          console.log("exists in list already");
           setCurrentStudents([...currentStudents, scanValue]);
         }
         setTimeout(() => {
           setCelebration(false);
-        }, 10000);
+        }, 6000);
         setCelebration(true);
-        // handleSuccessfulResponse(scanValue);
       }
     });
   };
 
   useEffect(() => {
-    //fetchCurrentStudents()
+    console.log("useEffect");
     axios
       .get(BASEURL + "/scan")
       .then((response) => {
@@ -47,7 +48,9 @@ export default function ScannerMain() {
       {showCelebration && (
         <>
           <Confetti tweenDuration={1000} />
-          <h1 className="celebrateName">Congratulations!!</h1>
+          <span style={styles.celebrateName} className="celebrateName">
+            Well Done {newStudentName}!
+          </span>
         </>
       )}
       <Scanner submitScan={submitScan} />
@@ -55,3 +58,16 @@ export default function ScannerMain() {
     </div>
   );
 }
+
+const styles = {
+  celebrateName: {
+    fontSize: "5em",
+    fontWeight: "bold",
+    color: "#0E2E44",
+    textAlign: "center",
+    position: "absolute",
+    top: "43%",
+    width: "100%",
+    backgroundColor: "#88C1E7",
+  },
+};

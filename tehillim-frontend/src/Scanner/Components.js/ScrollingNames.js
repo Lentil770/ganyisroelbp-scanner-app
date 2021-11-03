@@ -1,40 +1,38 @@
 import "../style/scrolling.css";
-// import { scrollWrap } from "../Functions/Scrolling";
 
 export default function ScrollingNames({ currentStudents }) {
   const namesLiList = () => {
-    console.log("naemsllisr");
     let LiList = [];
     for (let i = 0; i < currentStudents.length; i++) {
-      LiList.push(<span key={i}>{currentStudents[i]}</span>);
+      LiList.unshift(<span key={i}>{currentStudents[i]}</span>);
     }
+    if (currentStudents.length >= 10) {
+      for (let i = 0; i < currentStudents.length; i++) {
+        LiList.unshift(
+          <span key={currentStudents.length + i}>{currentStudents[i]}</span>
+        );
+      }
+      for (let i = 0; i < currentStudents.length; i++) {
+        LiList.unshift(
+          <span key={currentStudents.length * 2 + i}>{currentStudents[i]}</span>
+        );
+      }
+    } /**duplicating ensures each name appears clearly in scrolling list */
     return LiList;
   };
+
   return (
     <>
-      <div id="scroll-container">
-        <div className="wrap-container" id="wrap-scroll">
-          {/* <ul id="ul-scroll"> */}
-          {namesLiList()}
-          {/* </ul> */}
-        </div>
+      <div
+        className="wrap-container"
+        id="wrap-scroll"
+        style={{
+          height:
+            currentStudents.length * 300 /* = height of all spans*/ + "px",
+        }}
+      >
+        {namesLiList()}
       </div>
-      <svg>
-        <defs>
-          <linearGradient id="gradient" x1="0" y1="0%" x2="0" y2="50%">
-            <stop stopColor="black" offset="0" />
-            <stop stopColor="white" offset="1" />
-          </linearGradient>
-
-          <mask
-            id="masking"
-            maskUnits="objectBoundingBox"
-            maskContentUnits="objectBoundingBox"
-          >
-            <rect y="0" width="1" height="1" fill="url(#gradient)" />
-          </mask>
-        </defs>
-      </svg>
     </>
   );
 }
